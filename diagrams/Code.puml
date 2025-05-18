@@ -1,0 +1,26 @@
+@startuml
+
+!includeurl https://raw.githubusercontent.com/RicardoNiepel/C4-PlantUML/master/C4_Component.puml
+
+Container_Boundary(configurationService, "Configuration Service") {
+    class ConfigurationController {
+        +ResponseEntity<> updateConfiguration(command)
+    }
+    class CommandHandler {
+        +void handleCommand(command)
+    }
+    class DeviceManager {
+        MessageProducer producer
+        +void updateDeviceConfig(id, data)
+    }
+    class ConfigRepository {
+        +void save()
+        +Device get()
+    }
+
+    ConfigurationController  --  CommandHandler
+    CommandHandler - DeviceManager
+    CommandHandler -- ConfigRepository
+}
+
+@enduml
